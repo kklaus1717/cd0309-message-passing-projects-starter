@@ -19,7 +19,6 @@ stub = personUsageStatistic_pb2_grpc.PersonUsageStatisticServiceStub(channel)
 # Kafka-Consumer mit Broker-Adresse
 consumer = KafkaConsumer(
     'person_usage_statistic_topic',
-    bootstrap_servers='localhost:9092',  # Kafka-Broker setzen
 )
 
 logger.info(f"Kadka consumer created...")
