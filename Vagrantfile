@@ -37,8 +37,6 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
-  config.vm.synced_folder "/home/udacity/share", "/home/vagrant/guest-folder"
-
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
