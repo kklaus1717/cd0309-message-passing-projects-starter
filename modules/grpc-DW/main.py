@@ -1,5 +1,6 @@
 import time
 from concurrent import futures
+import logging
 
 import grpc
 import personUsageStatistic_pb2
@@ -23,6 +24,10 @@ class PersonUsageStatisticServicer(personUsageStatistic_pb2_grpc.PersonUsageStat
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
 personUsageStatistic_pb2_grpc.add_PersonUsageStatisticServiceServicer_to_server(PersonUsageStatisticServicer(), server)
 
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.info(f"Server starting on port 5005...")
 
 print("Server starting on port 5005...")
 server.add_insecure_port("[::]:5005")
