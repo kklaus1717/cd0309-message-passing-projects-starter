@@ -1,0 +1,10 @@
+FROM python:3.8
+LABEL maintainer="Klaus"
+
+COPY . /app
+WORKDIR /app
+
+RUN pip install kafka-python
+
+# command to run on container start
+CMD [ "python", "consumer.py" ]
