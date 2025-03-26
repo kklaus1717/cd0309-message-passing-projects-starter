@@ -3,6 +3,14 @@ import personUsageStatistic_pb2
 import personUsageStatistic_pb2_grpc
 from kafka import KafkaConsumer
 import json
+import logging
+
+# Set up logging
+format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+logging.basicConfig(level=logging.DEBUG, format=format)
+logger = logging.getLogger(__name__)
+logger.info(f"gRPC DW Proxy Server starting...")
+
 
 channel = grpc.insecure_channel("localhost:5005") 
 stub = personUsageStatistic_pb2_grpc.PersonUsageStatisticServiceStub(channel)
@@ -13,6 +21,9 @@ consumer = KafkaConsumer(
     'person_usage_statistic_topic',
     bootstrap_servers='localhost:9092',  # Kafka-Broker setzen
 )
+
+logger.info(f"Kadka consumer created...")
+
 
 # Nachrichten konsumieren
 for message in consumer:

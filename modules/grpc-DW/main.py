@@ -25,11 +25,11 @@ server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
 personUsageStatistic_pb2_grpc.add_PersonUsageStatisticServiceServicer_to_server(PersonUsageStatisticServicer(), server)
 
 # Set up logging
-logging.basicConfig(level=logging.INFO)
+format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+logging.basicConfig(level=logging.DEBUG, format=format)
 logger = logging.getLogger(__name__)
-logger.info(f"Server starting on port 5005...")
+logger.info(f"gRPC DW server starting on port 5005...")
 
-print("Server starting on port 5005...")
 server.add_insecure_port("[::]:5005")
 server.start()
 # Keep thread alive
