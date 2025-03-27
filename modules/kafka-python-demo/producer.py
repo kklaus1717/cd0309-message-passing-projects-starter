@@ -12,7 +12,6 @@ logger.info(f"Producer Server starting...")
 
 TOPIC_NAME = 'person_usage_statistic_topic'
 KAFKA_SERVER = 'localhost:9092'
-
 producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
 
 while (True):
@@ -20,6 +19,6 @@ while (True):
         "id": "3",
         "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     })
-    logger.info(f"Sende dfaten. {data}")
-    producer.send(TOPIC_NAME, data)
+    logger.info(f"Sending data: {data}")
+    producer.send(TOPIC_NAME, data.encode('utf-8').bytes)
     producer.flush()
