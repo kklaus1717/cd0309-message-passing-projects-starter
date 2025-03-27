@@ -1,0 +1,67 @@
+{
+    "info": {
+            "_postman_id": "a0db11b9-478c-4472-a840-f6028f53c2b6",
+            "name": "UdaConnect",
+            "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+            "_exporter_id": "43533345"
+    },
+    "item": [
+            {
+                    "name": "http://localhost:30002/api/locations/persons/6/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5",
+                    "request": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                                    "raw": "http://localhost:30002/api/locations/persons/6/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5",
+                                    "protocol": "http",
+                                    "host": [
+                                            "localhost"
+                                    ],
+                                    "port": "30002",
+                                    "path": [
+                                            "api",
+                                            "locations",
+                                            "persons",
+                                            "6",
+                                            "connection"
+                                    ],
+                                    "query": [
+                                            {
+                                                    "key": "start_date",
+                                                    "value": "2020-01-01"
+                                            },
+                                            {
+                                                    "key": "end_date",
+                                                    "value": "2020-12-30"
+                                            },
+                                            {
+                                                    "key": "distance",
+                                                    "value": "5"
+                                            }
+                                    ]
+                            }
+                    },
+                    "response": []
+            },
+            {
+                    "name": "http://localhost:30001/api/persons",
+                    "request": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                                    "raw": "http://localhost:30001/api/persons",
+                                    "protocol": "http",
+                                    "host": [
+                                            "localhost"
+                                    ],
+                                    "port": "30001",
+                                    "path": [
+                                            "api",
+                                            "persons"
+                                    ]
+                            }
+                    },
+                    "response": []
+            }
+    ]
+}

@@ -7,8 +7,9 @@ from app.udaconnect.models import Connection, Location, Person
 from app.udaconnect.schemas import ConnectionSchema, LocationSchema, PersonSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
+from kafka import KafkaProducer
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api")
 
 
@@ -77,6 +78,19 @@ class ConnectionService:
                         person=person_map[exposed_person_id], location=location,
                     )
                 )
+
+        #Write the statistic data into the kafka queue
+        TOPIC_NAME = 'person_usage_statistic_topic'
+        KAFKA_SERVER = 'localhost:9092'
+        producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
+
+        data = json.dumps({
+            "id": person_id,
+            "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        })
+        logger.info(f"Write into Kakka queue: {data}")
+        producer.send(TOPIC_NAME, data.encode('utf-8'))
+        producer.flush()
 
         return result
 

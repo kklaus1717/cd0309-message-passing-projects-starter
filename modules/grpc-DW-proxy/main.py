@@ -16,24 +16,27 @@ channel = grpc.insecure_channel("localhost:5005")
 stub = personUsageStatistic_pb2_grpc.PersonUsageStatisticServiceStub(channel)
 
 
+TOPIC_NAME = 'person_usage_statistic_topic'
+KAFKA_SERVER = 'localhost:9092'
+
 # Kafka-Consumer mit Broker-Adresse
 consumer = KafkaConsumer(
-    'person_usage_statistic_topic',
-    bootstrap_servers='localhost:9092',  # Kafka-Broker setzen
+    TOPIC_NAME,
+    bootstrap_servers = KAFKA_SERVER
 )
 
-logger.info(f"Kadka consumer created...")
+logger.info(f"Kafka consumer created...")
 
 
 # Nachrichten konsumieren
 for message in consumer:
-    print(f"Received: {message.value} from topic {message.topic}")
+    logger.info(f"Received: {message.value} from topic {message.topic}")
     # Update this with desired payload
     data = json.loads(message.value)
-    print("data: " + data)
     personUsageStatistic = personUsageStatistic_pb2.PersonUsageStatisticMessage(
         id = data["id"],
         created_at = data["created_at"],
     )
     response = stub.Create(personUsageStatistic)
+    logger.info(f"Data send: {message.value}")
 
