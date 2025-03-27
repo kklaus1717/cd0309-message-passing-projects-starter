@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+message PersonUsageStatisticMessage {
+  string id = 1;
+  string created_at = 2;
+}
+
+service PersonUsageStatisticService {
+    rpc Create(PersonUsageStatisticMessage) returns (PersonUsageStatisticMessage);
+}

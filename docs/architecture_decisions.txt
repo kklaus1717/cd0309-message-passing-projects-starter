@@ -1,0 +1,19 @@
+UdaConnect Architecture decsription
+
+1. New Micro service person and location
+The UdaConnect monolit is split in two backend micro services. One micro service handels 
+the person data and the other one the location data. Both services have still a REST API 
+because they should be easyly accessible via the frontend.
+In this implementation they use still the same database for this MVP and this can/must be 
+split in the future.
+My hypotetical assumption is that business wants to see a statistic in a data warehouse (DW)
+how often for a person the connections should be shown. For that reason this information 
+about person id and date in put into a Kafka queue. This means the processing of this
+information can be done asynchronously.
+
+2. DW Proxy
+This component reads the Kafka queued data and calls via gRPC the data warehouse system.
+gRPC is used because it is an internal connection and data warehouse supports this interface.
+
+3. DW
+The data warehouse consumes the data via gRPC.
