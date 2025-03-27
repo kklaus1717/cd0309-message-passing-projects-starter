@@ -20,5 +20,5 @@ while (True):
         "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     })
     logger.info(f"Sending data: {data}")
-    producer.send(TOPIC_NAME, data.encode('utf-8').bytes)
+    producer.send(TOPIC_NAME, data.encode('utf-8'))
     producer.flush()
