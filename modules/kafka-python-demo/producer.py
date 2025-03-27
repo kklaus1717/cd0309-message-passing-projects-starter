@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Set up logging
 format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-logging.basicConfig(level=logging.DEBUG, format=format)
+logging.basicConfig(level=logging.INFO, format=format)
 logger = logging.getLogger(__name__)
 logger.info(f"Producer Server starting...")
 
@@ -15,10 +15,11 @@ KAFKA_SERVER = 'localhost:9092'
 
 producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
 
-data = json.dumps({
-    "id": "3",
-    "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-})
-logger.info(f"Sende dfaten. {data}")
-producer.send(TOPIC_NAME, data)
-producer.flush()
+while (True):
+    data = json.dumps({
+        "id": "3",
+        "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
+    logger.info(f"Sende dfaten. {data}")
+    producer.send(TOPIC_NAME, data)
+    producer.flush()
