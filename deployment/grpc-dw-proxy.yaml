@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: grpc-dw-proxy
+  name: grpc-dw-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: grpc-dw-proxy
+  template:
+    metadata:
+      labels:
+        service: grpc-dw-proxy
+    spec:
+      containers:
+      - image: kklaus1616/grpc-dw-proxy:latest
+        name: grpc-dw-proxy
+        imagePullPolicy: Always
+      restartPolicy: Always

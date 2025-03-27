@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: grpc-dw
+  name: grpc-dw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: grpc-dw
+  template:
+    metadata:
+      labels:
+        service: grpc-dw
+    spec:
+      containers:
+      - image: kklaus1616/grpc-dw:latest
+        name: grpc-dw
+        imagePullPolicy: Always
+      restartPolicy: Always
