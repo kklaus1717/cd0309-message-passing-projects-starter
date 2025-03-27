@@ -9,7 +9,7 @@ logger.info(f"Consumer Server starting...")
 
 # Kafka-Consumer mit Broker-Adresse
 consumer = KafkaConsumer(
-    'person_topic',
+    'person_usage_statistic_topic',
     bootstrap_servers='localhost:9092',  # Kafka-Broker setzen
 )
 
