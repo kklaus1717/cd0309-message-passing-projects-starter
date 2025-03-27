@@ -4,8 +4,9 @@ LABEL maintainer="Klaus"
 COPY . /app
 WORKDIR /app
 
-RUN pip install grpcio-tools==1.70.0
-RUN pip install grpcio==1.70.0
+RUN pip install -r requirements.txt
+
+EXPOSE 5005
 
 # command to run on container start
 CMD [ "python", "main.py" ]

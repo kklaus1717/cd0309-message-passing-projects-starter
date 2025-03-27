@@ -24,7 +24,7 @@ personUsageStatistic_pb2_grpc.add_PersonUsageStatisticServiceServicer_to_server(
 
 # Set up logging
 format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-logging.basicConfig(level=logging.DEBUG, format=format)
+logging.basicConfig(level=logging.INFO, format=format)
 logger = logging.getLogger(__name__)
 
 server.add_insecure_port("[::]:5005")
