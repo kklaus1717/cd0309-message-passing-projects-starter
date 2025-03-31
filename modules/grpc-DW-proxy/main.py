@@ -17,7 +17,7 @@ stub = personUsageStatistic_pb2_grpc.PersonUsageStatisticServiceStub(channel)
 
 
 TOPIC_NAME = 'person_usage_statistic_topic'
-KAFKA_SERVER = 'localhost:9092'
+KAFKA_SERVER = 'kafka:9092'
 
 # Kafka-Consumer mit Broker-Adresse
 consumer = KafkaConsumer(
