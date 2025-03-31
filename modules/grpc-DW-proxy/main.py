@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 logger.info(f"gRPC DW Proxy Server starting...")
 
 
-channel = grpc.insecure_channel("grpc-dw:5005") 
+channel = grpc.insecure_channel("localhost:5005") 
 stub = personUsageStatistic_pb2_grpc.PersonUsageStatisticServiceStub(channel)
 
 
