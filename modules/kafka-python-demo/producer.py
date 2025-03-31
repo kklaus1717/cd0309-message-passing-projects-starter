@@ -11,7 +11,7 @@ logger.info(f"Producer Server starting...")
 
 
 TOPIC_NAME = 'person_usage_statistic_topic'
-KAFKA_SERVER = 'localhost:9092'
+KAFKA_SERVER = 'kafka:9092'
 producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
 
 while (True):
