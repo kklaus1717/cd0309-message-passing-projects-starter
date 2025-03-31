@@ -8,6 +8,7 @@ from app.udaconnect.schemas import ConnectionSchema, LocationSchema, PersonSchem
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 from kafka import KafkaProducer
+import json
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api")
