@@ -5,13 +5,13 @@ metadata:
     service: grpc-dw
   name: grpc-dw
 spec:
+  type: ClusterIP  # Standardwert, macht den Service nur innerhalb des Clusters erreichbar
   ports:
-  - name: "5005"
-    port: 5005
-    targetPort: 5005
+    - name: grpc
+      port: 5005        # Service-Port
+      targetPort: 5005  # Port des Containers
   selector:
-    service: grpc-dw
-  type: NodePort
+    service: grpc-dw  # Muss mit den Labels des Deployments übereinstimmen
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,4 +33,6 @@ spec:
       - image: kklaus1616/grpc-dw:latest
         name: grpc-dw
         imagePullPolicy: Always
+        ports:
+          - containerPort: 5005  # Wichtig, um sicherzustellen, dass der Container den Port öffnet
       restartPolicy: Always
