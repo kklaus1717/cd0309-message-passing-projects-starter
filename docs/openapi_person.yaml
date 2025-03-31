@@ -1,0 +1,33 @@
+openapi: 3.0.0
+info:
+  title: Persons API
+  description: API for retrieving person data
+  version: 1.0.0
+servers:
+  - url: http://localhost:30001/api
+paths:
+  /persons:
+    get:
+      summary: Retrieves the list of persons
+      responses:
+        '200':
+          description: Successful response with a list of persons
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 5
+                    first_name:
+                      type: string
+                      example: Taco
+                    last_anme:
+                      type: string
+                      example: Fargo
+                    company_name:
+                      type: string
+                      example: Alpha Omega Upholstery

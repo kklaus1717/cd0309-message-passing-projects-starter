@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  title: Locations API
+  description: API to retrieve connections of a person based on location data.
+  version: 1.0.0
+servers:
+  - url: http://localhost:30002/api
+paths:
+  /locations/persons/{id}/connection:
+    get:
+      summary: Get connections of a person
+      description: Retrieves connections of a person within a certain distance and date range.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the person
+          schema:
+            type: integer
+        - name: start_date
+          in: query
+          required: true
+          description: Start date for connection search
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          required: true
+          description: End date for connection search
+          schema:
+            type: string
+            format: date
+        - name: distance
+          in: query
+          required: true
+          description: Distance in kilometers for connection search
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of connected persons
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 5
+                    first_name:
+                      type: string
+                      example: Taco
+                    last_name:
+                      type: string
+                      example: Fargo
+                    company_name:
+                      type: string
+                      example: Alpha Omega Upholstery
+        '400':
+          description: Bad request due to invalid parameters
+        '404':
+          description: Person not found

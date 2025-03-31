@@ -1,3 +1,5 @@
+My extensions are added at the end of this common descriptions !!!!!!!!!!!!!!!!
+
 # UdaConnect
 ## Overview
 ### Background
@@ -150,3 +152,57 @@ Your architecture diagram should focus on the services and how they talk to one 
 ## Tips
 * We can access a running Docker container using `kubectl exec -it <pod_id> sh`. From there, we can `curl` an endpoint to debug network issues.
 * The starter project uses Python Flask. Flask doesn't work well with `asyncio` out-of-the-box. Consider using `multiprocessing` to create threads for asynchronous behavior in a standard Flask application.
+
+
+
+# -------------------------------------------------------------------------------------
+# My Project changes and descriptions
+# -------------------------------------------------------------------------------------
+## Application moduls
+Only the following modules which are described here are used in this application. Others are in this project and are only used for test reasons.
+### frontend
+Only the connection API URL is changed from
+http://localhost:30001/api/persons/${personId}/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5
+to
+http://localhost:30002/api/locations/persons/6/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5
+### rest-api-location
+Contains the rest api location code. It was extracted from the monolith api code.
+The connection API endpoint moves from the person API to this location API.
+If the connection API endpoint is called a message for statistic reasons is written to 
+the kafka queue.
+The corresponding open API swagger yaml file openapi_location.yaml is stored in the docs directory.
+The endpoints which are NOT used from the frontends are still in the code but not further used or documented.
+### rest-api-person
+Contains the rest api person code. It was extracted from the monolith api code.
+The corresponding open API swagger yaml file openapi_person.yaml is stored in the docs directory.
+The endpoints which are NOT used from the frontends are still in the code but not further used or documented.
+### grpc-DW-proxy
+This service polls as an input the kafka queue and makes a grpc call to the grpc-DW service for each message.
+### grpc-DW
+Is a provider of the grpc endpoint. An info log is written if a message is received.
+To test this chain the 
+http://localhost:30002/api/locations/persons/6/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5
+can be called to trigger this process chain.
+
+## Deployment
+### Prerequisites
+The initial prerequisites described above are not changed.
+In addition a kafka server must be established. The kafka server should run in a seperate docker container as 
+described in the lesson "Solution: Setting Up and Using Kafka" or see https://kafka.apache.org/quickstart#quickstart_download.
+If the kafka container was started in docker a queue "person_usage_statistic_topic" must be created in kafka with the following command:
+kafka-topics.sh --create --topic person_usage_statistic_topic --bootstrap-server localhost:9092
+
+### Steps
+All necesarry kubernetes deployment yaml files are in directory deployment.
+1. `kubectl apply -f deployment/db-configmap.yaml` - Set up environment variables for the pods
+2. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
+3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
+4. `kubectl apply -f deployment/rest-api-person.yaml` - Set up the person REST API service
+5. `kubectl apply -f deployment/rest-api-location.yaml` - Set up the location REST API service
+6. `kubectl apply -f deployment/grpc-dw.yaml`  - Set up the DW service
+7. `kubectl apply -f deployment/grpc-dw-proxy.yaml`  - Set up the DW proxy service
+8. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
+9. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+
+
+
