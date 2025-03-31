@@ -6,7 +6,7 @@ metadata:
   name: grpc-dw
 spec:
   ports:
-  - name: "5000"
+  - name: "5005"
     port: 5005
     targetPort: 5005
   selector:
