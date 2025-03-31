@@ -11,9 +11,10 @@ logging.basicConfig(level=logging.INFO, format=format)
 logger = logging.getLogger(__name__)
 logger.info(f"gRPC DW Proxy Server starting...")
 
-
-channel = grpc.insecure_channel("grpc-dw:5005") 
+DW_SERVER = "grpc-dw:5005"
+channel = grpc.insecure_channel(DW_SERVER) 
 stub = personUsageStatistic_pb2_grpc.PersonUsageStatisticServiceStub(channel)
+logger.info(f"SW server host:  {DW_SERVER}")
 
 
 TOPIC_NAME = 'person_usage_statistic_topic'
