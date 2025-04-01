@@ -187,22 +187,21 @@ can be called to trigger this process chain.
 ## Deployment
 ### Prerequisites
 The initial prerequisites described above are not changed.
-In addition a kafka server must be established. The kafka server should run in a seperate docker container as 
-described in the lesson "Solution: Setting Up and Using Kafka" or see https://kafka.apache.org/quickstart#quickstart_download.
-If the kafka container was started in docker a queue "person_usage_statistic_topic" must be created in kafka with the following command:
-kafka-topics.sh --create --topic person_usage_statistic_topic --bootstrap-server localhost:9092
 
 ### Steps
 All necesarry kubernetes deployment yaml files are in directory deployment.
-1. `kubectl apply -f deployment/db-configmap.yaml` - Set up environment variables for the pods
-2. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
-3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
-4. `kubectl apply -f deployment/rest-api-person.yaml` - Set up the person REST API service
-5. `kubectl apply -f deployment/rest-api-location.yaml` - Set up the location REST API service
-6. `kubectl apply -f deployment/grpc-dw.yaml`  - Set up the DW service
-7. `kubectl apply -f deployment/grpc-dw-proxy.yaml`  - Set up the DW proxy service
-8. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
-9. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+1. `kubectl apply -f deployment/kafka.yaml` - Set up the kafka server
+3. `kubectl apply -f ./deployment/kafka-service.yaml` - Set up the kafka server service
+2. `kubectl apply -f ./deployment/kafka-create-topic.yaml` - Creates the queue
+3. `kubectl apply -f deployment/db-configmap.yaml` - Set up environment variables for the pods
+4. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
+5. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
+6. `kubectl apply -f deployment/rest-api-person.yaml` - Set up the person REST API service
+7. `kubectl apply -f deployment/rest-api-location.yaml` - Set up the location REST API service
+8. `kubectl apply -f deployment/grpc-dw.yaml`  - Set up the DW service
+9. `kubectl apply -f deployment/grpc-dw-proxy.yaml`  - Set up the DW proxy service
+10. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
+11. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
 
 
 
